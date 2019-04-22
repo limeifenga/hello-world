@@ -1,0 +1,170 @@
+React 特点
+1、声明式设计 - 声明范式  ，可以轻松描述应用
+2、高效  - 通过对DOM的模式，最大限度的减少与DOM的交互
+3、灵活 - 可以与已知库或框架很好的配合
+4、JSX - 是JavaScript 语法扩展。用来声明React中的元素；可以在JSX中使用js表达式
+5、组件 - 通过React构建组件，使得代码更容易得到复用，能够很好的运用在大型项目当中。
+6、单向响应的数据流 - 实现了单向响应数据流，从而减少重复代码，这也是它为什么比传统数据绑定更简单
+
+知识点：
+一、JSX介绍
+-JSX本身也是表达式，在JSX中可以使任意javascript表达式
+-使用引号来定义以字符串为值的属性
+-使用大括号在定义以javascript表达式为值的属性
+-使用小驼峰命名属性
+-babel转译器会把JSX转换成一个名为React.createElement()的方法调用
+    const element = (
+      <h1 className="greeting">
+        Hello, world!
+      </h1>
+    );
+    === 等同
+    const element = React.createElement(
+      'h1',
+      {className: 'greeting'},
+      'Hello, world!'
+    );
+
+1、constructor构造方法中
+-在声明 class 继承时，必须调用super()方法，才能在子类中正确获取类型的this
+-给组件设置自身属性，this.state = {}
+-使用 {this.state.name}
+-设置 this.setState({name:""})
+
+2、funName(){return -节点标签  -运算逻辑}   -函数封装
+   -使用{this.funName()}
+
+2、FunName(props){return -节点标签}   -函数组件
+   -使用<FunName onClass = {() => this.nameClick()}  value={this.state.name}/>
+
+2、render(){
+  - 逻辑运算
+  - return(
+    -单节点标签
+    -{this.funName()}
+    -多节点标签嵌套
+    -混合标标签加组件嵌套
+  )
+}
+
+2、子组件中使用props
+ -{this.props.name}
+ -onClick={() => this.props.onClick()}
+
+3、ReactDOM.render(element,document.getElementById('root'))
+-要将React元素渲染到根DOM节点中，我们通过把它们都传递给 ReactDOM.render() 的方法来将其渲染到页面上
+
+
+二、组件
+-组件名必须大写开头
+-组合组件
+-组件提取将多次用到的块，抽象，或者复杂的块，减细化。
+1、函数定义  - 它就是一个javaScript函数
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+    -渲染   const element = <Welcome name="Sara" />;
+
+2、类定义组件 - es6 class 的方式
+class Welcome extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+
+三、state
+
+1、生命周期
+
+开始 > getDefaultProps  static defaultProps = {} ; static propTypes = {}
+     > getInitialState  constructor(){ super();this.state = {}}
+     > componentWillMount()
+     > render()
+     > componentDidMount()
+
+     - 运行中
+     > 组件运行时> 父组件更新 render() 属性(props)改变 > componentWillReceiveProps() > shouldComponentUpdate()
+                > 状态（state）改变                   > shouldComponentUpdate()
+
+         -> componentWillUpdate() > render() > componentDidUpdate()
+
+         -> 销毁
+         -> 卸载(Unmount) componentWillUnmount() > 结束
+
+
+ -getDefaultProps()
+    -设置默认的props，也可以用defaultProps设置组件的默认属性
+ -getinitialState()
+    -es6没有这个钩子函数，定义this.state的，es6直接在constructor中定义
+ -componentWillMount()
+    -组件初始化时只调用，以后组件更新不调用，整个生命周期只调用一次，此时可修改state
+ -render()
+    -react最最要的步骤，创建虚拟dom，进行diff算法，更新dom树都在此进行，此时就不能更改state
+ -componentDidMount()
+    -组件渲染之后调用，只调用一次。
+ -componentWillReceiveProps(nextProps)
+    -组件初始化时不调用，组件接受新的props时调用。可修改state
+ -shouldComponentUpdate(nextProps,nextState)
+    -react性能优化非常重要的一环，组件接受新的state或者props时调用，我们可以设置在次对比前后两个props和state是否相同，如果相同
+     -则返回false阻止更新，因为相同的属性状态一定会生成相同的dom树，这样就不需要创造新的dom树和旧的dom树进行diff算法对吧，节省
+       -大量性能，尤其是在dom结构复杂的时候
+
+ -componentWillUpdate(nextProps,nextState)
+    -组件初始化不调用，只有在组件将要更新时才调用，此时可以修改state
+
+ -render()组件渲染
+
+ -componentDidUpdate();
+    -组件初始化不调用，组件更新完成后调用，此时可以获取dom节点
+ - componentWillUnmount()
+    -组件将要卸载时调用，一些事件监听和定时器需要在此时清除。
+
+2、state 正确的使用状态
+
+  -更新状态  this.setState({name:''})
+  -构造函数 constructor中是唯一初始化state的地方
+  -状态更新可能是异步的
+   因为React可以将多个setState()调用合并成一个调用来提高性能，
+   因为this.props和this.state可能是异步更新的，不能依靠他们的值来计算下一个状态
+
+  // Wrong   错误
+  this.setState({
+    counter: this.state.counter + this.props.increment,
+  });
+
+  -要修复它，请使用setState() 来接受一个函数而不是一个对象。
+   该函数将接收先前的状态作为第一个参数，将此次更新被应用时的props做为第二个参数：
+  this.setState((prevState,props)=>({ counter: prevState.counter + props.increment,}))
+
+四、事件
+ <button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>   //事件对象e要放在最后
+ <button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
+ -上述两种方式是等价的，分别通过 arrow functions 和 Function.prototype.bind 来为事件处理函数传递参数。
+
+
+
+五、条件渲染
+我们将创建一个 Greeting 组件，它会根据用户是否登录来显示其中之一：
+
+function Greeting(props) {
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return <UserGreeting />;
+  }
+  return <GuestGreeting />;
+}
+
+ReactDOM.render(
+  // Try changing to isLoggedIn={true}:
+  <Greeting isLoggedIn={false} />,
+  document.getElementById('root')
+);
+
+
+
+
+
+ mapStateToProps
+
+
+ mapDispatchToProps
