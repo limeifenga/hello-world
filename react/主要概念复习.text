@@ -161,10 +161,69 @@ ReactDOM.render(
 );
 
 
+六、组件渲染
+你可以通过使用{}在JSX内构建组件的值
+const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((number) =>
+  <li>{number}</li>
+);
+使用-
+ <ul>{listItems}</ul>
+尝试将表达式组件换成成函数组件。
+
+function ListItems (props){
+    const numbers = props.numbers;
+    const listItems = numbers.map((number) =>
+      <li key = {number.toString()}>{number}</li>
+    );
+    return <ul>{listItems}</ul>
+}
+使用-
+const numbers = [1, 2, 3, 4, 5];
+<ListItems numbers={numbers} />
+
+七、keys
+-Keys可以在DOM中的某些元素被增加或删除的时候帮助React识别哪些元素发生了变化。
+ -元素的key最好是这个元素在列表中拥有的一个独一无二的字符串。兄弟唯一，不需要全局唯一
+  通常，我们使用来自数据的id作为元素的key:
+
+八、表单
+html中 textarea 元素通过子节点来定义文本内容
+react中 textarea 会用value属性来代替。
+
+html中 select 初始化选中的方法，实在 option 上 写上 selected
+react中  直接在 select 中设置 value值
+
+-多个输入的解决方法
+当你有处理多个受控的input元素时，你可以通过给每个元素添加一个name属性，
+来让处理函数根据 event.target.name的值来选择做什么。
+handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+九、状态提升
+-单一数据流，自上而下形式。数据共享方式，采用状态提升方法，在上级最近父组件传递
+
+
+十、{props.children}  和vue的 <template v-slot="default"> <slot></slot> 一个意思
+
+
+
+
+
+
+
 
 
 
  mapStateToProps
+
 
 
  mapDispatchToProps
