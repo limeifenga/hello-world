@@ -220,10 +220,15 @@ handleInputChange(event) {
 
 
 
+十一、
 
+ mapStateToProps(state)
+ -把指定的state 作为props，注入到组件中
+ -返回一个对象{属性：state.home.属性}
 
- mapStateToProps
-
-
-
- mapDispatchToProps
+ mapDispatchToProps(dispatch)
+ -把指定的action 作为props，注入到组件中
+ -返回一个对象{actions：bindActionCreators({actionName1,actionname2})}
+ {connect} from react-redux
+ connect(mapStateToProps,mapDispatchToProps)(home)
+ -把指定的state和指定的action和组件连接起来
