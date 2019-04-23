@@ -1,0 +1,38 @@
+
+@width:10px;
+@height:@width + 10px;
+@color:#333;
+div{
+  width:@width;
+  height:@height;
+}
+
+#id{
+  .button{
+    background-color:grey;
+    &:hover{
+      background-color:red;
+    }
+  }
+  .tab{}
+}
+
+.border{
+  border-top:1px solid black;
+  border-tottom:1px solid black;
+}
+
+#menu{
+  color: @color;
+  .border();
+}
+
+@page{
+  @width：30px;
+  #header{
+    width:@width; // 30px
+  }
+}
+
+@import "library";
+@import "typo.css";
