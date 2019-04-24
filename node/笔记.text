@@ -1,0 +1,119 @@
+node.js是运行在服务端的javascript
+node.js是基于一个chrome JavaScript 运行时创建的一个平台。
+node.js是一个事件驱动i/o服务端JavaScript环境，基于google的v8引擎，v8引擎执行
+JavaScript的速度非常快，性能非常好
+
+一、创建一个服务
+ -node自带模块  require
+1、引用http模块
+2、调用http的createServer(function(request,response){}).listen创建服务器
+   - request  请求
+   - response 对请求做出响应
+   - listen   方法设置端口号
+3、在function()回调函数里，发送HTTP头部 response.writeHead(200,{'Content-Type':'text/plain'})
+   - response.end()发送响应数据
+
+二、node.js回调函数
+node.js异步编程的直接体现就是回调。
+-体现-一边看书，一边写代码，看完书后，就触发回调，这样就没有阻塞等待I/O操作，提高了性能
+可以处理大量的并发请求。
+
+-阻塞和非阻塞
+ -异步执行和等待执行。
+
+补充：promise 异步
+-串行 fun.then(fun1).then(fun2).then(fun3) //顺序执行
+-并行 Promise.race([p1,p2]).then( result => {}) //有一个执行完
+-并行 Promise.all([p1,p2]).then( result => {}) //所有执行完
+
+async/await 异步
+-async 声明的 函数 都会异步执行
+-await 放在async 声明的函数里面，执行等待操作；阻塞执行
+
+
+四、node.js事件循环
+-node.js是单线程应用程序，但是因为V8引擎提供的异步执行回调接口，通过这些接口可以处理
+  大量的并发，所以性能非常高。
+-node.js几乎每一个API都是支持回调函数的。
+-node.js基本上所有事件机制都是用设计模式中观察者模式实现。
+-node.js单线程类似进入一个while（true）的事件循环，直到没有事件观察者退出，
+  每个异步事件都在生成一个事件观察者，如果有事件发生就调用该回调函数。
+
+五、事件驱动程序
+node.js使用事件驱动模型，当web server接收到请求，就把它关闭然后进行处理，然后去服务
+下一个web请求。当这个请求完成，它被放回处理队列，当到达队列开头，这个结果返回给用户。
+这个模型非常高效可扩展性非常强，因为web server一直接受请求而不等任何读写操作。
+（这也被称为非阻塞式IO或者事件驱动IO）
+
+events模块，通过实例化EventEmitter类来绑定和监听事件。
+var event = new events.EventEmitter()
+event.on('eventName',()=>{})
+event.emit('eventName')
+
+
+六、Node 应用程序是如何工作的？
+-在 Node 应用程序中，执行异步操作的函数将回调函数作为最后一个参数，
+ 回调函数接收错误对象作为第一个参数。
+var fs = require("fs");
+
+fs.readFile('input.txt', functi  on (err, data) {
+   if (err){
+      console.log(err.stack);
+      return;
+   }
+   console.log(data.toString());
+});
+console.log("程序执行完毕");
+
+
+七、buffer(缓冲区)类
+在处理像TCP流或流文件时，必须使用到二进制数据。
+buffer存储原始数据，可以让node.js处理二进制数据
+
+八、stream是一个抽象接口，还有stdout（标准输出）接口。
+node.js，stream有四种流类型
+ -Readable -可读操作
+ -Writable -可写操作
+ -Duplex   -可读可写操作
+ -Transform -操作被写入的数据，然后读出结果。
+
+所有的Stream对象都是EventEmitter的实例。常用事件有：
+ -data -当数据可读时触发
+ -end  -没有更多的数据可读时触发
+ -error -在接收和写入过程中发生错误时 electron
+
+九、全局对象
+__filename表示当前正在执行脚本的文件名，输出文件在所在位置绝对路径
+
+——dirname表示当前执行脚本所在的目录
+
+十、常用工具
+util.inherits 是一个实现对象间原型继承的函数
+
+fs.readFile() 异步读取
+fs.readFileSync()
+fs.open()
+fs.stat()获取文件信息
+获取url参数
+
+get:url.parse(req.url,true).query
+post:querystring.parse(postdata)
+
+十一、express
+是一个简洁而灵活的node.js web应用框架，
+提供了一系列强大特性帮助创建各种web应用，
+和HTTP工具。
+-可以设置中间件来响应http请求。
+-定义了路由表用于执行不同的http请求动作。
+-可以通过向模板参数来动态渲染HTML页面。
+
+
+
+
+
+
+
+
+
+
+

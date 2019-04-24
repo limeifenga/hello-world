@@ -130,8 +130,7 @@ const prevArray = (str) => {
   let array = [];
   str = str.split('');
 
-  // for (let i = 0; i < str.length; i++) {
-
+   /*
       array.push(str[0]+str[1]+str[2])
       array.push(str[0]+str[2]+str[1])
       array.push(str[1]+str[1]+str[2])
@@ -139,7 +138,8 @@ const prevArray = (str) => {
       array.push(str[2]+str[0]+str[1])
       array.push(str[2]+str[1]+str[0])
 
-  // };
+      */
+
   array = new Set(array)
   return array;
 };

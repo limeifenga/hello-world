@@ -1,0 +1,12 @@
+
+beforeCreate   -组件实例刚被创建，组件属性计算之前。
+created        -组件实例创建完成，属性已经绑定，DOM未生成。
+
+beforeMount    -模板编译之前
+mounted        -模板编译之后
+
+beforeUpdate   -组件更新之前
+update         -组件更新之后
+
+beforeDestroy  -组件销毁之前
+destroyed      -组件销毁之后
