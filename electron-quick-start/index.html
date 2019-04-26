@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <style>
+    #test{border:1px solid red}
+    .box{width:100px;border:1px solid darkcyan}
+    </style>
+  </head>
+  <body>
+
+    <!--<webview id="foo" src="https://www.baidu.com/"></webview>-->
+
+    <div id="test">color</div>
+    <div class="box"></div>
+    <button onclick="addNewStyle(1)">button</button>
+    <button onclick="addNewStyle(2)">button</button>
+    <script>
+     const {addNewStyle} =  require('./renderer.js')
+
+    </script>
+  </body>
+</html>
