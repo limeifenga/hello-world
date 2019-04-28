@@ -122,28 +122,6 @@
  };
  console.log(prevStr(['a','b','c','d']))
 
- /*
- 如果两个字符串的字符一样，但是顺序不一样，被认为是兄弟字符串，比如bad和adb即为兄弟字符串，现提供一个字符串，如何在字典中迅速找到它的兄弟字符串，请描述数据结构和查询过程。
- */
-
-const prevArray = (str) => {
-  let array = [];
-  str = str.split('');
-
-   /*
-      array.push(str[0]+str[1]+str[2])
-      array.push(str[0]+str[2]+str[1])
-      array.push(str[1]+str[1]+str[2])
-      array.push(str[1]+str[2]+str[0])
-      array.push(str[2]+str[0]+str[1])
-      array.push(str[2]+str[1]+str[0])
-
-      */
-
-  array = new Set(array)
-  return array;
-};
-console.log(prevArray("abc"))
 
 </script>
 </html>
