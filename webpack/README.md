@@ -1,6 +1,5 @@
 # webpack
 
-//非常简单
 -概念
     本质上，webpack 是一个现代 JavaScript 应用程序的静态模块打包器(module bundler)。
     当 webpack 处理应用程序时，它会递归地构建一个依赖关系图(dependency graph)，
