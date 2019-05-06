@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div onclick="cat.call(this)">点击</div>
+    <!--
+     点击元素，this指向DIV元素。
+     call 和 apply 在执行的时候传入一个对象，顶替原有的context
+    -->
+</body>
+<script>
+
+    /**context
+     * 任何方法，谁调用了它，则就是它的context和 this 指向描述 一致。
+     * 1、用_this替换this，改变 context
+     * 2、自执行函数传递，改变 context
+     * 3、用bind方式传递，改变 context
+     * 4、用call,和apply方式顶替原有的 context
+     * 5、箭头函数
+     * */
+
+
+    function cat() {
+      console.log(this)  //实例   //Window
+    }
+
+    new cat()
+    cat()
+
+    //  异步函数
+    function say() {
+      setTimeout(function () {
+        console.log(this) //Window  //Window
+      },0)
+    }
+    new say()
+    say()
+
+   //  自执行函数
+   function see() {
+     (function () {
+       console.log(this)   //Window  //Window
+     })() //自执行函数也是被window调用
+   }
+   new see()
+   see()
+
+
+   // 用_this代替this;并得到正常访问外层this.
+   function say1() {
+     var _this = this;
+     setTimeout(function () {
+       console.log(_this)  //实例   //Window
+     },0)
+   }
+   new say1();
+   say1();
+
+   // 自调用传递
+   function see1() {
+      (function (_this) {
+        console.log(_this)   //实例   //Window
+      })(this)
+   }
+   new see1()
+   see1()
+
+   // 用bind方式传递
+    function say2() {
+      setTimeout(function () {
+        console.log(this)  //实例   //Window
+      }.bind(this),0)
+    }
+    new say2();
+    say2();
+
+   // 箭头函数解决
+   function say3() {
+     setTimeout( () => {
+       console.log(this)  //实例   //Window
+     },0)
+   }
+    new say3();
+    say3();
+
+
+
+
+</script>
+</html>
