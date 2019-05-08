@@ -76,3 +76,20 @@
   Object.prototype.toString.call(new Error()) ; // [object Error]
   Object.prototype.toString.call(document) ; // [object HTMLDocument]
   Object.prototype.toString.call(window) ; //[object global] window 是全局对象 global 的引用
+
+
+// 对象深拷贝方法
+// 方法一
+var clone2 = function(obj){
+  return (JSON.parse(JSON.stringify(obj)))
+}
+
+// 方法二
+var clone = function (obj) {
+  var newObj = obj.constructor === Array ? [] : {};
+  for (let key  in obj){
+     newObj[key] = typeof obj[key] == "Object" ? clone(obj[key]) : obj[key] ;
+  }
+  return newObj
+}
+
